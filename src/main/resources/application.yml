@@ -1,0 +1,7 @@
+spring:
+  profiles:
+    active: dev
+
+library:
+  name: "My Local Library"
+  description: "A simple library management system"
