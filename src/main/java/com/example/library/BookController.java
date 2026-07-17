@@ -2,6 +2,8 @@ package com.example.library;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,15 +37,52 @@ public class BookController {
         logger.info("REST request to add new book");
         return bookService.addBook(book);
     }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book book) {
+        logger.info("REST request to update book");
+        Book updated = bookService.updateBook(id, book);
+        if (updated != null) {
+            return ResponseEntity.ok(updated);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @DeleteMapping("/{id}")
-    public String deleteBook(@PathVariable Long id) {
+    public ResponseEntity<String> deleteBook(@PathVariable Long id) {
         logger.info("REST request to delete book with id: " + id);
-        boolean deleted = bookService.deleteBook(id);
-        if (deleted) {
-            return "Book deleted successfully.";
-        } else {
-            return "Book not found.";
+        try {
+            boolean deleted = bookService.deleteBook(id);
+            if (deleted) {
+                return ResponseEntity.ok("Book deleted successfully.");
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found.");
+            }
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/borrow")
+    public ResponseEntity<?> borrowBook(@PathVariable Long id, @RequestParam String userId) {
+        logger.info("REST request to borrow book id: " + id + " for user: " + userId);
+        try {
+            BorrowRecord record = bookService.borrowBook(id, userId);
+            return ResponseEntity.ok(record);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/{id}/return")
+    public ResponseEntity<?> returnBook(@PathVariable Long id) {
+        logger.info("REST request to return book id: " + id);
+        try {
+            BorrowRecord record = bookService.returnBook(id);
+            return ResponseEntity.ok(record);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 }

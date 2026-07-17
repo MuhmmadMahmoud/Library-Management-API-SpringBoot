@@ -5,6 +5,7 @@ public class Book {
     private String title;
     private String author;
     private String category;
+    private boolean available = true;
 
     public Book() {
     }
@@ -46,5 +47,13 @@ public class Book {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }
