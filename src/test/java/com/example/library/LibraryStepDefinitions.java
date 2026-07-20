@@ -24,7 +24,6 @@ public class LibraryStepDefinitions {
 
     @Given("the library is empty")
     public void the_library_is_empty() {
-        // bookService is already fresh from setUp
     }
 
     @Given("the library has a book with title {string}, author {string}, category {string}")
@@ -61,7 +60,6 @@ public class LibraryStepDefinitions {
 
     @Given("user {string} has {int} overdue books")
     public void user_has_overdue_books(String userId, int count) {
-        // Add books and create overdue records by setting due date in the past
         for (int i = 0; i < count; i++) {
             Book book = new Book();
             book.setTitle("Overdue Book " + i);
@@ -69,7 +67,6 @@ public class LibraryStepDefinitions {
             book.setCategory("Category");
             Book added = bookService.addBook(book);
             BorrowRecord record = bookService.borrowBook(added.getId(), userId);
-            // Manually set due date in the past to simulate overdue
             record.setDueDate(LocalDate.now().minusDays(5));
             record.setStatus("Overdue");
             added.setAvailable(false);

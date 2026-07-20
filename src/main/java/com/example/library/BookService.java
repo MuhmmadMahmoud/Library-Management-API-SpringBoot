@@ -70,7 +70,6 @@ public class BookService {
         return false;
     }
 
-    // Borrow Logic
     public BorrowRecord borrowBook(Long bookId, String userId) {
         logger.info("User " + userId + " attempting to borrow book " + bookId);
         

@@ -9,7 +9,7 @@ public class BorrowRecord {
     private LocalDate borrowDate;
     private LocalDate dueDate;
     private LocalDate returnDate;
-    private String status; // "Borrowed", "Returned", "Overdue"
+    private String status;
 
     public BorrowRecord() {
     }
