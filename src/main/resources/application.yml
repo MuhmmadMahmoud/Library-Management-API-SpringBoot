@@ -1,6 +1,11 @@
 spring:
   profiles:
     active: dev
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:9000
 
 library:
   name: "My Local Library"
