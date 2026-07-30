@@ -76,7 +76,7 @@ public class AuthorizationServerConfig {
             .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
             .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
             .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-            .redirectUri("http://localhost:8080/login/oauth2/code/auth-code-client")
+            .redirectUri("http://127.0.0.1:9000/authorized")
             .scope("read")
             .scope("write")
             .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
